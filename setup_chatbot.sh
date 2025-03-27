@@ -13,6 +13,17 @@ if [ ! -f "main.go" ]; then
   exit 1
 fi
 
+# Cek apakah Go tersedia
+if ! command -v go &> /dev/null; then
+  echo "🛠️  Go tidak ditemukan, menginstal Go..."
+
+  wget https://go.dev/dl/go1.21.6.linux-amd64.tar.gz -O /tmp/go.tar.gz
+  sudo rm -rf /usr/local/go
+  sudo tar -C /usr/local -xzf /tmp/go.tar.gz
+  echo 'export PATH=$PATH:/usr/local/go/bin' | tee -a ~/.bashrc ~/.profile >/dev/null
+  export PATH=$PATH:/usr/local/go/bin
+fi
+
 go mod tidy
 go build -o $APP_NAME main.go
 if [ $? -ne 0 ]; then
