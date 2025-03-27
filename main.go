@@ -50,5 +50,5 @@ func main() {
     pprof.Register(router)
 
     router.POST("/chat", chatHandler.ChatStream)
-    router.Run(":8080")
+    router.Run(":80")
 }
